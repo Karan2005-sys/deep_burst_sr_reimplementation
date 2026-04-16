@@ -1,11 +1,6 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from torch.utils.data import Dataset
-
-from dbsr.data.burstsr import BurstSRDataset
-from dbsr.data.synthetic import SyntheticBurstRGBDataset
-from dbsr.losses.alignment import RealBurstAlignedLoss
-from dbsr.losses.basic import BasicL1Loss
 
 
 def build_dataset(config: dict, data_root: str, split: str) -> Dataset:
@@ -13,6 +8,8 @@ def build_dataset(config: dict, data_root: str, split: str) -> Dataset:
     dataset_cfg = config["dataset"]
 
     if dataset_type == "burstsr_real":
+        from dbsr.data.burstsr import BurstSRDataset
+
         return BurstSRDataset(
             root=data_root,
             split=split,
@@ -23,6 +20,8 @@ def build_dataset(config: dict, data_root: str, split: str) -> Dataset:
         )
 
     if dataset_type == "synthetic_rgb":
+        from dbsr.data.synthetic import SyntheticBurstRGBDataset
+
         return SyntheticBurstRGBDataset(
             root=data_root,
             split=split,
@@ -42,7 +41,11 @@ def build_dataset(config: dict, data_root: str, split: str) -> Dataset:
 def build_loss(config: dict):
     task = config["task"]
     if task == "real":
+        from dbsr.losses.alignment import RealBurstAlignedLoss
+
         return RealBurstAlignedLoss(**config["loss"])
     if task == "synthetic":
+        from dbsr.losses.basic import BasicL1Loss
+
         return BasicL1Loss()
     raise ValueError(f"Unknown task: {task}")

@@ -1,13 +1,23 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from pathlib import Path
+import importlib.util
+import ctypes.util
 
-import cv2
 import numpy as np
 import torch
 
+_CV2_SPEC = importlib.util.find_spec("cv2")
+_HAS_LIBGL = ctypes.util.find_library("GL") is not None
+if _CV2_SPEC is not None and _HAS_LIBGL:
+    import cv2
+else:
+    cv2 = None
+
 
 def read_image(path: str | Path) -> np.ndarray:
+    if cv2 is None:
+        raise RuntimeError("OpenCV (cv2) is required to read real BurstSR images.")
     image = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
     if image is None:
         raise FileNotFoundError(f"Could not read image: {path}")
