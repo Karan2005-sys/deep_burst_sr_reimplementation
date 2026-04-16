@@ -5,7 +5,8 @@ import shutil
 from pathlib import Path
 
 from datasets import load_dataset
-
+import os
+os.environ["HF_DATASETS_ALLOW_CODE"] = "1"
 
 def _copy_path(src: str, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
