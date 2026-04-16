@@ -1,0 +1,8 @@
+/workspace/deep_burst_sr_reimplementation/src/dbsr/engine/trainer.py:63: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = GradScaler(enabled=bool(config["train"]["amp"]) and device.type == "cuda")
+train 001:   0%|          | 0/4 [00:00<?, ?it/s]/root/.pyenv/versions/3.10.19/lib/python3.10/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  super().__init__(loader)
+/workspace/deep_burst_sr_reimplementation/src/dbsr/engine/trainer.py:101: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=self.scaler.is_enabled()):
+train 001:   0%|          | 0/4 [00:02<?, ?it/s, loss=0.2499]train 001:  25%|██▌       | 1/4 [00:02<00:06,  2.15s/it, loss=0.2499]train 001:  25%|██▌       | 1/4 [00:03<00:06,  2.15s/it, loss=0.2499]train 001:  50%|█████     | 2/4 [00:03<00:03,  1.88s/it, loss=0.2499]train 001:  50%|█████     | 2/4 [00:05<00:03,  1.88s/it, loss=0.2500]train 001:  75%|███████▌  | 3/4 [00:05<00:01,  1.83s/it, loss=0.2500]train 001:  75%|███████▌  | 3/4 [00:07<00:01,  1.83s/it, loss=0.2500]train 001: 100%|██████████| 4/4 [00:07<00:00,  1.79s/it, loss=0.2500]train 001: 100%|██████████| 4/4 [00:07<00:00,  1.84s/it, loss=0.2500]
+val:   0%|          | 0/2 [00:00<?, ?it/s]val:  50%|█████     | 1/2 [00:00<00:00,  2.05it/s]val: 100%|██████████| 2/2 [00:00<00:00,  2.20it/s]val: 100%|██████████| 2/2 [00:00<00:00,  2.17it/s]

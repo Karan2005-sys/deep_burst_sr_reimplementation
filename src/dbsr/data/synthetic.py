@@ -124,7 +124,7 @@ class SyntheticBurstRGBDataset(Dataset):
             warped = _warp_rgb(gt, angle, tx, ty)
             lr = F.interpolate(
                 warped.unsqueeze(0),
-                size=(self.crop_size * 2, self.crop_size * 2),
+                size=(self.crop_size, self.crop_size),
                 mode="bilinear",
                 align_corners=False,
             )[0]
