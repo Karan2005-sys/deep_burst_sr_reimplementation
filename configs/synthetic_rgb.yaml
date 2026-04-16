@@ -1,0 +1,47 @@
+﻿experiment_name: synthetic_burst_baseline
+output_dir: ./outputs/synthetic_burst_baseline
+seed: 42
+device: cuda
+task: synthetic
+dataset_type: synthetic_rgb
+
+dataset:
+  scale: 4
+  burst_size: 8
+  train_split: train
+  val_split: val
+  crop_size: 160
+  max_translation: 6.0
+  max_rotation_deg: 1.5
+  shot_noise: 0.01
+  read_noise: 0.002
+  deterministic_val: true
+
+model:
+  in_channels: 4
+  base_channels: 64
+  embed_dim: 256
+  encoder_blocks: 6
+  decoder_blocks_lowres: 4
+  decoder_blocks_highres: 4
+  fusion_proj_dim: 64
+  flow_feature_dim: 16
+  scale: 4
+  flow_backend: farneback
+
+train:
+  epochs: 30
+  batch_size: 2
+  num_workers: 2
+  lr: 0.0001
+  weight_decay: 0.0
+  grad_clip_norm: 1.0
+  amp: true
+  log_interval: 10
+  save_interval: 1
+
+loss:
+  type: l1
+
+eval:
+  batch_size: 1

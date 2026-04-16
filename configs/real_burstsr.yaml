@@ -1,0 +1,47 @@
+﻿experiment_name: burstsr_real_baseline
+output_dir: ./outputs/burstsr_real_baseline
+seed: 42
+device: cuda
+task: real
+dataset_type: burstsr_real
+
+dataset:
+  scale: 4
+  burst_size: 8
+  train_split: train
+  val_split: val
+  crop_size: 160
+  frame_pattern: "*.png"
+  gt_filename: gt.png
+  normalize_divisor: 1023.0
+
+model:
+  in_channels: 4
+  base_channels: 64
+  embed_dim: 256
+  encoder_blocks: 6
+  decoder_blocks_lowres: 4
+  decoder_blocks_highres: 4
+  fusion_proj_dim: 64
+  flow_feature_dim: 16
+  scale: 4
+  flow_backend: farneback
+
+train:
+  epochs: 30
+  batch_size: 2
+  num_workers: 2
+  lr: 0.0001
+  weight_decay: 0.0
+  grad_clip_norm: 1.0
+  amp: true
+  log_interval: 10
+  save_interval: 1
+
+loss:
+  gaussian_kernel: 5
+  gaussian_sigma: 1.0
+  residual_mask_threshold: 0.05
+
+eval:
+  batch_size: 1
