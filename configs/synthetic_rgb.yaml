@@ -30,7 +30,7 @@ model:
   flow_backend: farneback
 
 train:
-  epochs: 30
+  epochs: 5
   batch_size: 2
   num_workers: 2
   lr: 0.0001
