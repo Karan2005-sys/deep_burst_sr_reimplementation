@@ -44,4 +44,4 @@ loss:
   type: l1
 
 eval:
-  batch_size: 1
+  batch_size: 4
