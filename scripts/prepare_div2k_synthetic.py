@@ -4,9 +4,10 @@ import argparse
 import shutil
 from pathlib import Path
 
-from datasets import load_dataset
 import os
 os.environ["HF_DATASETS_ALLOW_CODE"] = "1"
+
+from datasets import load_dataset
 
 def _copy_path(src: str, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
@@ -14,7 +15,7 @@ def _copy_path(src: str, dst: Path) -> None:
 
 
 def export_split(output_root: Path, split_name: str, max_items: int | None) -> None:
-    dataset = load_dataset("eugenesiow/Div2k", "bicubic_x4", split=split_name)
+    dataset = load_dataset("eugenesiow/Div2k", "bicubic_x4", split=split_name, trust_remote_code=True)
     split_dir = output_root / ("train" if split_name == "train" else "val")
     split_dir.mkdir(parents=True, exist_ok=True)
 
