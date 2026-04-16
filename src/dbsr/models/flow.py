@@ -1,13 +1,21 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from typing import List
+import importlib.util
+import ctypes.util
 
-import cv2
 import numpy as np
 import torch
 from torch import nn
 
 from dbsr.data.io import packed_raw_to_rgb_proxy
+
+_CV2_SPEC = importlib.util.find_spec("cv2")
+_HAS_LIBGL = ctypes.util.find_library("GL") is not None
+if _CV2_SPEC is not None and _HAS_LIBGL:
+    import cv2
+else:
+    cv2 = None
 
 
 def _to_uint8_rgb(image: torch.Tensor) -> np.ndarray:
@@ -24,6 +32,9 @@ class FarnebackFlowEstimator(nn.Module):
         batch, frames, channels, height, width = burst.shape
         if channels != 4:
             raise ValueError("Flow estimator expects packed RAW input with 4 channels.")
+
+        if cv2 is None:
+            return torch.zeros(batch, frames, 2, height, width, dtype=burst.dtype, device=burst.device)
 
         flows: List[torch.Tensor] = []
         for batch_idx in range(batch):
